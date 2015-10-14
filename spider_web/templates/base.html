@@ -47,39 +47,40 @@
               <li class="active"><a href="#">首页</a></li>
               <li><a href="#about">关于</a></li>
               <li><a href="#contact">联系</a></li>
-             
-             
+            </ul>
+ 
+             <!--判断用户是否登陆-->
               {% if user.is_authenticated %}
-              <li>
-              	<h1>hello {{user.username}}!</h1>
-              </li>
-              <li>
+           
 
-              	<form class="navbar-form pull-right" method="post" action="{% url 'logout' %}">
+            <form class="navbar-form pull-right" method="post" action="{% url 'logout' %}">
               	{% csrf_token %}
+                <strong>{{user.username}}</strong>
               	<button type="submit" class="btn btn-danger">注销</button>
        			</form>
-              </li>
+              
               {% else %}
-			<li>
-				<form class="navbar-form pull-right" method="post">
-					{% csrf_token %}
-  					<input type="text" name="username" class="input-small" placeholder="用户名">
-  					<input type="password" name="password" class="input-small" placeholder="密码">
-  					
-  					<button type="submit"  class="btn btn-success">登录</button>
-  					
-   							<a class="btn btn-primary" href="{% url 'register' %}">注册</a>
-				</form>
-			</li>
-			{% endif %}
-				
-            </ul>
+			      
+            {% if errors %}
+              {% for error in errors %}
+                <!--登陆错误信息-->
+                <span class="label label-warning">{{error}}</span>
+             {% endfor %}
+            {% endif %}
 
+        <!--没有登陆重新登陆-->
+				    <form class="navbar-form pull-right" method="post">
+					     {% csrf_token %}
+  					   <input type="text" name="username" class="input-small" placeholder="用户名">
+  					   <input type="password" name="password" class="input-small" placeholder="密码">
+  					
+  					   <button type="submit"  class="btn btn-success">登录</button>
+  					
+   						 <a class="btn btn-primary" href="{% url 'register' %}">注册</a>
+				    </form>
+			
+			       {% endif %}
           </div><!--/.nav-collapse -->
-
-
-
         </div><!--/container-->
       </div>
     </div>
@@ -87,20 +88,6 @@
     
 
     <div class="container">
-
-      <!-- Main hero unit for a primary marketing message or call to action 
-      <div class="hero-unit">
-        <h1>党国，你好！</h1>
-        <p>
-	  毛主席说过：“进入共产主义社会后，一切阶级和政党都要消亡，共产党也不例外。”，受此鼓舞，接下来几年我们要快干巧干，争取早日实现共产主义！
-	</p>
-        <p><a class="btn btn-primary btn-large">了解更多 &raquo;</a></p>
-      </div>-->
-
-      
-
-
-
 
       <!-- Example row of columns -->
       
