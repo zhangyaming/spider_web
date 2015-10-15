@@ -54,6 +54,7 @@ def register(request):
 
 
 def user_login(request):
+	news_list = News.objects.all()[0:10]#1014--2358--张亚明
 	errors=[]
 	if request.method == 'POST':
 		username = request.POST.get('username')
@@ -70,7 +71,7 @@ def user_login(request):
 			errors.append('用户名或密码错误，请重试')
 			return render(request,'base.html',{'errors':errors})
 	else:
-		return render(request, 'base.html',{})
+		return render(request, 'base.html',{'news_list':news_list})
 
 def user_logout(request):
 	logout(request)

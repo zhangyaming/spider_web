@@ -65,6 +65,7 @@
               {% for error in errors %}
                 <!--登陆错误信息-->
                 <span class="label label-warning">{{error}}</span>
+                <!--#########   bug     ############           -->
              {% endfor %}
             {% endif %}
 
@@ -91,32 +92,28 @@
 
       <!-- Example row of columns -->
       
+      {% if news_list %}
+          {% for news  in news_list %} 
       <!--  新闻 1-->
       <div class="row">
         <div class="span10">
-          <h2>胡主席很伟大</h2>
-           <p>
-	     天下饥荒人相食，晋惠帝问臣：<strong>“何不食肉糜?”</strong>
-	     帝国将倾太监欺，光绪帝问师：<strong>“一个鸡蛋要3两银子你吃得起吗？”</strong>
-	     天朝和谐房价涨，胡主席问民：<strong>“45平米的房子一个月77块钱的租金能承受么？”</strong>
-	     史称--<span class='label label-important' style="font-size:15px;">盛世三问！</span>
-	   </p>
-          <p><a class="btn" href="#">了解更多 &raquo;</a></p>
+          <h2><a href="{% url 'showNews' news.id %}" target="_blank">{{ news.newsTitle }}</a></h2>
+          <p>{{ news.newsTime }}</p>
+           <p>{{ news.newsContent }}</p>
+          <p><a class="btn" href="{{ news.newsUrl }}">了解更多 &raquo;</a></p>
         </div>
         <div class="span2">
          <a href="#" class="thumbnail">
          <img src="{% static "images/jay.jpg" %}" alt="test">
       	</a>
-          
-       </div>
-        
+       </div>     
       </div>
-
-
       <hr>
+        {% endfor %}
+      {% endif %}
 
 
-      <!--  新闻 2-->
+      <!--新闻 2
       <div class="row">
         <div class="span10">
           <h2>胡主席很伟大</h2>
@@ -124,7 +121,7 @@
 	     天下饥荒人相食，晋惠帝问臣：<strong>“何不食肉糜?”</strong>
 	     帝国将倾太监欺，光绪帝问师：<strong>“一个鸡蛋要3两银子你吃得起吗？”</strong>
 	     天朝和谐房价涨，胡主席问民：<strong>“45平米的房子一个月77块钱的租金能承受么？”</strong>
-	     史称--<span class='label label-important' style="font-size:15px;">盛世三问！</span>
+	     史称<span class='label label-important' style="font-size:15px;">盛世三问！</span>
 	   </p>
           <p><a class="btn" href="#">了解更多 &raquo;</a></p>
         </div>
@@ -137,7 +134,7 @@
         
       </div>
 
-      <hr>
+      <hr>-->
 
       <footer>
         <p>&copy; <strong>0611cpp</strong></p>
