@@ -20,7 +20,7 @@ def showNews(request, newsID):
 	news.save()
 	picture  =  Picture.objects.filter( pictureID = news.picture_id)
 	comment = Comments.objects.filter(news_id = newsID).order_by("-content_time")
-	return render(request, 'app/newsDetails.html', {'news':news,'picture':picture,'comment':comment})
+	return render(request, 'newsDetails.html', {'news':news,'picture':picture,'comment':comment})
 
 
 def register(request):

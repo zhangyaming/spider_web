@@ -1,4 +1,3 @@
-
 {% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
@@ -44,7 +43,7 @@
           <a class="brand" href="{% url 'base' %}">明日头条</a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="active"><a href="{% url 'base' %}">首页</a></li><!--href填空值返回本页面-->
+              <li class="active"><a href="{% url 'base' %}">首页</a></li>
               <li><a href="#about">关于</a></li>
               <li><a href="#contact">联系</a></li>
             </ul>
@@ -56,7 +55,7 @@
             <form class="navbar-form pull-right" method="post" action="{% url 'logout' %}">
               	{% csrf_token %}
                 <strong>{{user.username}}</strong>
-              	<button type="submit" class="btn btn-danger">退出</button>
+              	<button type="submit" class="btn btn-danger">注销</button>
        			</form>
               
               {% else %}
@@ -82,78 +81,95 @@
 			
 			       {% endif %}
           </div><!--/.nav-collapse -->
+
+
         </div><!--/container-->
+
       </div>
     </div>
 
-    
-
-    <div class="container">
-
-      <!-- Example row of columns -->
-      
-      {% if news_list %}
-          {% for news  in news_list %} 
-      <!--  新闻 1-->
-      <div class="row">
-        <div class="span10">
-          <h2><a href="{% url 'showNews' news.id %}" target="_blank">{{ news.newsTitle }}</a></h2>
-          <p>{{ news.newsTime }}</p>
-           <p>{{ news.newsContent }}</p>
-          <p><a class="btn" href="{{ news.newsUrl }}">了解更多 &raquo;</a></p>
-          
-           <table>    
-            <tbody>
-              <tr>
-                <td><h4>浏览:({{news.browseNumber}})</h4></td>
-                <td>&nbsp</td>
-                <td><h4>点赞:({{news.likesNumber}})</h4></td>
-                <td>&nbsp</td>
-                <td><a href="{% url 'showNews' news.id %}"><h4>评论:({{news.commentNumber}})</h4></a></td>
-              </tr>
-            </tbody>
-          </table>
-        </div><!--span10-->
-       
-         
 
 
-        
-        <div class="span2">
-         <a href="#" class="thumbnail">
-         <img src="{% static "images/jay.jpg" %}" alt="test">
-      	</a>
-       </div><!--span2-->     
-      </div><!--row-->
-      <hr>
-        {% endfor %}
-      {% endif %}
 
-
-      <!--新闻 2
-      <div class="row">
-        <div class="span10">
-          <h2>胡主席很伟大</h2>
-           <p>
-	     天下饥荒人相食，晋惠帝问臣：<strong>“何不食肉糜?”</strong>
-	     帝国将倾太监欺，光绪帝问师：<strong>“一个鸡蛋要3两银子你吃得起吗？”</strong>
-	     天朝和谐房价涨，胡主席问民：<strong>“45平米的房子一个月77块钱的租金能承受么？”</strong>
-	     史称<span class='label label-important' style="font-size:15px;">盛世三问！</span>
-	   </p>
-          <p><a class="btn" href="#">了解更多 &raquo;</a></p>
-        </div>
-        <div class="span2">
-         <a href="#" class="thumbnail">
-         <img src="{% static "images/jay.jpg" %}" alt="test">
-      	</a>
-          
-       </div>
-        
+  <div class="container">
+    <div class="row">
+    <div class="span8">
+      <div class="hero-unit">
+        <h1><a href="{% url 'showNews' news.id %}" target="_blank">{{ news.newsTitle }}</a></h1>
+        <p>{{ news.newsTime }}</p>
+        <p>
+          <h3><pre word-wrap: break-word>{{ news.newsContent }}</pre></h3>
+        </p>
       </div>
+      </div><!--span10-->
 
-      <hr>-->
+      <div class="span4">
+         <a href="#" class="thumbnail">
+         <img src="{% static "images/jay.jpg" %}" alt="test">
+        <!--  {% if picture %}
+    {% for img in picture %}
+      <img src="{{img.picture}}"><br/>
+    {% endfor %}
+  {% endif %}--><!--新闻图片-->
+        </a>
+       </div><!--span2-->     
 
-      <footer>
+      </div><!--row-->
+      
+      <hr>
+
+<h2><strong>网友评论：</strong>  </h2>
+ {% if comment %}
+    
+    <table class="table table-striped table-bordered table-condensed">
+  <!--<thead>
+    <tr>
+     <strong></strong>
+    </tr>
+  </thead>-->
+  <tbody>
+  {% for com in comment %}
+    <tr>
+      <td>
+        <tr>{{ com.username }}</tr>
+        <tr>{{com.content_time}}</tr> 
+      </td>
+      <td>{{com.content}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+  {% endif %}
+
+
+      <strong>网友评论：</strong>  
+
+      {% if comment %}
+    {% for com in comment %}
+      <strong>{{ com.username }}: </strong>
+      {{com.content}}<br/>
+      <font size="1">评论时间: <br/>{{com.content_time}}</font> <br/><br/><hr>
+    {% endfor %}
+  {% endif %}
+
+  <strong>我要评论： </strong><br/>
+  {% if user.is_authenticated %}
+    <form id="comment" method="post" action="{% url 'comment' user.id news.id%}">
+      {% csrf_token %}
+      <textarea  rows="8" cols="40" name="content"></textarea><br/>
+      <input type="submit" name='submit' value="提交" />
+    </form>
+  {% else %}
+    <textarea  rows="8" cols="40" name="content"></textarea><br/>
+    <a href="{% url 'login' %}"><img src="/static/images/login.png"  width="45px" height="27px"></a>
+  {% endif %}
+
+  
+
+
+
+    <footer>
         <p>&copy; <strong>0611cpp</strong></p>
       </footer>
 
@@ -179,4 +195,3 @@
 
   </body>
 </html>
-
