@@ -10,6 +10,8 @@ urlpatterns = patterns('',
     url(r'^logout/$', views.user_logout, name = 'logout'),
     url(r'^personal/$', views.personal, name= 'personal'),
     url(r'^comment/(?P<userID>\d+?)/(?P<newsID>\d+?)/$', views.comment, name='comment'),
-#测试模板页面
+    url(r'^modifyPassword/$', views.modifyPassword, name = 'modifyPassword'),
+
     url(r'^base/$',views.index, name = 'base'),
+
 )

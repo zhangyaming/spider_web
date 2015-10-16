@@ -32,16 +32,16 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('newsType', models.CharField(max_length=20)),
-                ('newsLable', models.CharField(max_length=20, blank=True)),
+                ('newsLable', models.CharField(max_length=20, null=True, blank=True)),
                 ('newsTitle', models.CharField(max_length=128)),
-                ('newsAbstract', models.CharField(max_length=50)),
                 ('newsContent', models.TextField(max_length=51200)),
                 ('picture_id', models.IntegerField(null=True, blank=True)),
                 ('browseNumber', models.IntegerField(default=0)),
                 ('commentNumber', models.IntegerField(default=0)),
                 ('likesNumber', models.IntegerField(default=0)),
-                ('newsTime', models.DateTimeField(auto_now=True)),
+                ('newsTime', models.DateTimeField(auto_now_add=True)),
                 ('newsUrl', models.URLField(max_length=256)),
+                ('newsAbstract', models.CharField(max_length=50)),
             ],
             options={
             },
@@ -53,6 +53,16 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('picture', models.URLField(max_length=256)),
                 ('pictureID', models.IntegerField()),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='test',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(max_length=100)),
             ],
             options={
             },
