@@ -16,9 +16,12 @@ class Migration(migrations.Migration):
             name='Comments',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('user_id', models.IntegerField()),
+                ('news_id', models.IntegerField()),
+                ('username', models.CharField(max_length=128)),
                 ('content', models.CharField(max_length=512)),
-                ('content_time', models.DateTimeField()),
-                ('comment_parent_id', models.IntegerField()),
+                ('content_time', models.DateTimeField(auto_now=True)),
+                ('comment_parent_id', models.IntegerField(default=0)),
             ],
             options={
             },
@@ -31,6 +34,7 @@ class Migration(migrations.Migration):
                 ('newsType', models.CharField(max_length=20)),
                 ('newsLable', models.CharField(max_length=20, blank=True)),
                 ('newsTitle', models.CharField(max_length=128)),
+                ('newsAbstract', models.CharField(max_length=50)),
                 ('newsContent', models.TextField(max_length=51200)),
                 ('picture_id', models.IntegerField(null=True, blank=True)),
                 ('browseNumber', models.IntegerField(default=0)),
@@ -59,7 +63,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('userGrade', models.IntegerField(default=1)),
-                ('userImage', models.ImageField(default=b'static/image/default.gif', null=True, upload_to=b'static/user_image', blank=True)),
+                ('userImage', models.ImageField(default=b'static/images/default.gif', null=True, upload_to=b'static/user_image', blank=True)),
                 ('loginCount', models.IntegerField(default=1)),
                 ('lastLogin', models.DateTimeField(auto_now=True)),
                 ('likeCount', models.IntegerField(default=0)),
@@ -69,17 +73,5 @@ class Migration(migrations.Migration):
             options={
             },
             bases=(models.Model,),
-        ),
-        migrations.AddField(
-            model_name='comments',
-            name='news_id',
-            field=models.ForeignKey(to='app.News'),
-            preserve_default=True,
-        ),
-        migrations.AddField(
-            model_name='comments',
-            name='user_id',
-            field=models.ForeignKey(to=settings.AUTH_USER_MODEL),
-            preserve_default=True,
         ),
     ]

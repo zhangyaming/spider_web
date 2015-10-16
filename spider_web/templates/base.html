@@ -55,28 +55,28 @@
 
             <form class="navbar-form pull-right" method="post" action="{% url 'logout' %}">
               	{% csrf_token %}
-                <strong>{{user.username}}</strong>
+                <a href="{% url 'personal' %}"><strong>{{user.username}}</strong></a>
               	<button type="submit" class="btn btn-danger">退出</button>
        			</form>
               
-              {% else %}
+             {% else %}
 			      
-            {% if errors %}
-              {% for error in errors %}
-                <!--登陆错误信息-->
-                <span class="label label-warning">{{error}}</span>
-                <!--#########   bug     ############           -->
-             {% endfor %}
-            {% endif %}
-
+                {% if errors %}
+                    {% for error in errors %}
+                   <!--登陆错误信息-->
+                    <span class="label label-warning">{{error}}</span>
+                   <!--#########   bug     ############-->           
+                   {% endfor %}
+                      {% endif %}
+            
         <!--没有登陆重新登陆-->
 				    <form class="navbar-form pull-right" method="post" action="{% url 'login' %}">
 					     {% csrf_token %}
-  					   <input type="text" name="username" class="input-small" placeholder="用户名">
+  					  <!-- <input type="text" name="username" class="input-small" placeholder="用户名">
   					   <input type="password" name="password" class="input-small" placeholder="密码">
   					
-  					   <button type="submit"  class="btn btn-success">登录</button>
-  					
+  					   <button type="submit"  class="btn btn-success">登录</button>-->
+  					   <a class="btn btn-success" href="{% url 'login' %}">登录</a>
    						 <a class="btn btn-primary" href="{% url 'register' %}">注册</a>
 				    </form>
 			

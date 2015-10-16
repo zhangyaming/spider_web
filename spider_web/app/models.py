@@ -33,6 +33,7 @@ class News(models.Model): #新闻表
 	newsType = models.CharField(max_length = 20) #新闻类型
 	newsLable = models.CharField(max_length  = 20, blank = True) #新闻label
 	newsTitle = models.CharField(max_length = 128)  #新闻标题
+	newsAbstract = models.CharField(max_length = 50) #新闻概要
 	newsContent = models.TextField(max_length = 51200)  #新闻正文
 	picture_id = models.IntegerField(blank = True, null=True) #与Picture表对应的pictureID
 	browseNumber = models.IntegerField(default = 0) #当前新闻被浏览的次数

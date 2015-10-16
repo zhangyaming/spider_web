@@ -12,7 +12,8 @@ def index(request):
 	news_list = News.objects.all()[0:10]
 	# news_list = News.objects.order_by('?')[0:2]
 	#print news_list  # for debug
-	return render(request, 'app/index.html', {'news_list':news_list})
+	#return render(request, 'app/index.html', {'news_list':news_list})
+	return render(request, 'base.html', {'news_list':news_list})
 
 def showNews(request, newsID):
 	news = News.objects.get(id = newsID)
@@ -49,12 +50,12 @@ def register(request):
 	else:
 		user_form = UserForm()
 		profile_form = ProfileForm()
-	return render(request, 'app/register.html', {'user_form':user_form, 'profile_form':profile_form, 'errors':errors,'registered':registered})
+	return render(request, 'register.html', {'user_form':user_form, 'profile_form':profile_form, 'errors':errors,'registered':registered})
 
 
 
 def user_login(request):
-	news_list = News.objects.all()[0:10]#1014--2358--张亚明
+	#news_list = News.objects.all()[0:10]#1014--2358--张亚明
 	errors=[]
 	if request.method == 'POST':
 		username = request.POST.get('username')
@@ -63,15 +64,15 @@ def user_login(request):
 		if user:
 			if user.is_active:
 				login(request, user)
-				return HttpResponseRedirect('/app/base/')
+				return HttpResponseRedirect('/app/login/')
 			else:
 				errors.append('您的账号暂时无法使用')
-				return render(request,'base.html',{'errors':errors})
+				return render(request,'login.html',{'errors':errors})
 		else:
 			errors.append('用户名或密码错误，请重试')
-			return render(request,'base.html',{'errors':errors})
+			return render(request,'login.html',{'errors':errors})
 	else:
-		return render(request, 'base.html',{'news_list':news_list})
+		return render(request, 'login.html',{})
 
 def user_logout(request):
 	logout(request)
@@ -88,7 +89,7 @@ def personal(request):
 	if str(res['userImage']) [0] != '/':
 		res['userImage'] = '/'+ str(res['userImage'])
 
-	return render(request,'app/personal.html',res)
+	return render(request,'personal.html',res)
 
 
 def comment(request,userID, newsID):
@@ -112,8 +113,8 @@ def comment(request,userID, newsID):
 # 	return HttpResponse('your browser is %s'  %ua)
 			
 #测试模板页面
-def test_base(request):
-	return render(request, 'base.html',{})
+#def test_base(request):
+	#return render(request, 'base.html',{})
 
 
 
